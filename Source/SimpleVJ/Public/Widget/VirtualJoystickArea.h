@@ -37,6 +37,9 @@ public:
 
     UFUNCTION(BlueprintCallable, Category = "Appearance")
     void SetInteractionColor(FLinearColor InInteractionColor);
+
+    UFUNCTION(BlueprintCallable, Category = "Input")
+    void InitializeVirtualJoystick(UWidget* Thumb, FVector2D InConstrainedLengths);
 	
 public:
     // ~Begin UWidget Interface
@@ -67,4 +70,18 @@ private:
 
 protected:
     TSharedPtr<SVirtualJoystickArea> MyVirtualJoystickArea;
+
+// 模擬搖桿 =========================================================================================================
+private:
+    void ComputeThumbPosition(const FVector2D& MyLocalPosition);
+
+private:
+    TWeakObjectPtr<UWidget> ThumbWidget;
+    FVector2D ConstrainedLengths = FVector2D::UnitVector;
+
+    int32 CapturedPointerIndex = INDEX_NONE;
+    FVector2D TouchLocalPosition = FVector2D::ZeroVector;
+    FVector2D ThumbOffset = FVector2D::ZeroVector;
+
+    bool bSendOneMoreEvent = false;
 };

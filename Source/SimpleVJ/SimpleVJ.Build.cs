@@ -15,6 +15,8 @@ public class SimpleVJ : ModuleRules
 			"Engine", 
 			"InputCore", 
 			"SlateCore",
+			"Slate",
+			"ApplicationCore",
 			"EnhancedInput" 
 		});
 	}

@@ -31,10 +31,12 @@ void UVirtualJoystickArea::ReleaseSlateResources(bool bReleaseChildren)
     MyVirtualJoystickArea.Reset();
 }
 
+#if WITH_EDITOR
 const FText UVirtualJoystickArea::GetPaletteCategory()
 {
     return FText::FromString(TEXT("Input"));
 }
+#endif
 
 TSharedRef<SWidget> UVirtualJoystickArea::RebuildWidget()
 {

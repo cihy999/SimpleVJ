@@ -59,6 +59,12 @@ protected:
     /** Translates the bound brush data and assigns it to the cached brush used by this widget. */
     const FSlateBrush* ConvertImage(TAttribute<FSlateBrush> InImageAsset) const;
 
+private:
+    void NativeTick(const FGeometry& MyGeometry, float InDeltaTime);
+    FReply NativeOnTouchStarted(const FGeometry& MyGeometry, const FPointerEvent& InTouchEvent);
+    FReply NativeOnTouchMoved(const FGeometry& MyGeometry, const FPointerEvent& InTouchEvent);
+    FReply NativeOnTouchEnded(const FGeometry& MyGeometry, const FPointerEvent& InTouchEvent);
+
 protected:
     TSharedPtr<SVirtualJoystickArea> MyVirtualJoystickArea;
 };

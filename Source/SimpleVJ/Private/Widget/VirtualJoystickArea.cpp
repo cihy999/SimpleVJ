@@ -57,7 +57,11 @@ const FText UVirtualJoystickArea::GetPaletteCategory()
 
 TSharedRef<SWidget> UVirtualJoystickArea::RebuildWidget()
 {
-    MyVirtualJoystickArea = SNew(SVirtualJoystickArea);
+    MyVirtualJoystickArea = SNew(SVirtualJoystickArea)
+        .OnTickEvent_UObject(this, &ThisClass::NativeTick)
+        .OnTouchStartedEvent_UObject(this, &ThisClass::NativeOnTouchStarted)
+        .OnTouchMovedEvent_UObject(this, &ThisClass::NativeOnTouchMoved)
+        .OnTouchEndedEvent_UObject(this, &ThisClass::NativeOnTouchEnded);
 
     if (!IsDesignTime())
     {

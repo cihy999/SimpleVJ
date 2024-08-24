@@ -24,6 +24,19 @@ public:
 
     UPROPERTY()
     FGetSlateBrush PreviewImageDelegate;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Getter, Setter, BlueprintSetter = "SetInteractionColor", Category = "Appearance", meta = (sRGB = "true"))
+    FLinearColor InteractionColor;
+
+    /** A bindable delegate for the BrushColor. */
+    UPROPERTY()
+    FGetLinearColor InteractionColorDelegate;
+
+public:
+    FLinearColor GetInteractionColor() const;
+
+    UFUNCTION(BlueprintCallable, Category = "Appearance")
+    void SetInteractionColor(FLinearColor InInteractionColor);
 	
 public:
     // ~Begin UWidget Interface

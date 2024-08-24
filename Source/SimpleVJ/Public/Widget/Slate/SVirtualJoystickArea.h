@@ -16,8 +16,10 @@ class SIMPLEVJ_API SVirtualJoystickArea : public SLeafWidget
 public:
 	SLATE_BEGIN_ARGS(SVirtualJoystickArea)
 		: _PreviewImage(FCoreStyle::Get().GetDefaultBrush())
+		, _InteractionColor(FLinearColor::White)
 		{}
 		SLATE_ATTRIBUTE(const FSlateBrush*, PreviewImage)
+		SLATE_ATTRIBUTE(FSlateColor, InteractionColor)
 	SLATE_END_ARGS()
 
 	SVirtualJoystickArea();
@@ -38,9 +40,14 @@ public:
 	void SetPreviewImage(TAttribute<const FSlateBrush*> InPreviewImage);
 	const FSlateBrush* GetPreviewImage() const { return PreviewImageAttribute.Get(); }
 
+	void SetInteractionColor(TAttribute<FSlateColor> InColorAndOpacity);
+	FSlateColor GetInteractionColor() const { return InteractionColorAttribute.Get(); }
+
 protected:
 	TSlateAttributeRef<const FSlateBrush*> GetPreviewImageAttribute() const { return TSlateAttributeRef<const FSlateBrush*>(SharedThis(this), PreviewImageAttribute); }
+	TSlateAttributeRef<FSlateColor> GetInteractionColorAttribute() const { return TSlateAttributeRef<FSlateColor>(SharedThis(this), InteractionColorAttribute); }
 
 private:
 	TSlateAttribute<const FSlateBrush*> PreviewImageAttribute;
+	TSlateAttribute<FSlateColor> InteractionColorAttribute;
 };

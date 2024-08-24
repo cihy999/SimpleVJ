@@ -9,6 +9,21 @@ UVirtualJoystickArea::UVirtualJoystickArea(const FObjectInitializer& ObjectIniti
     : Super(ObjectInitializer)
 {
     bIsVariable = true;
+    InteractionColor = FLinearColor(1, 1, 1, 0.2f);
+}
+
+FLinearColor UVirtualJoystickArea::GetInteractionColor() const
+{
+    return InteractionColor;
+}
+
+void UVirtualJoystickArea::SetInteractionColor(FLinearColor InInteractionColor)
+{
+    InteractionColor = InInteractionColor;
+    if (MyVirtualJoystickArea.IsValid())
+    {
+        MyVirtualJoystickArea->SetInteractionColor(InInteractionColor);
+    }
 }
 
 void UVirtualJoystickArea::SynchronizeProperties()
@@ -20,7 +35,9 @@ void UVirtualJoystickArea::SynchronizeProperties()
         return;
     }
 
+    TAttribute<FSlateColor> InteractionColorBinding = OPTIONAL_BINDING_CONVERT(FLinearColor, InteractionColor, FSlateColor, ConvertLinearColorToSlateColor);
     TAttribute<const FSlateBrush*> PreviewImageBinding = OPTIONAL_BINDING_CONVERT(FSlateBrush, PreviewImage, const FSlateBrush*, ConvertImage);
+    MyVirtualJoystickArea->SetInteractionColor(InteractionColorBinding);
     MyVirtualJoystickArea->SetPreviewImage(PreviewImageBinding);
 }
 
@@ -41,6 +58,11 @@ const FText UVirtualJoystickArea::GetPaletteCategory()
 TSharedRef<SWidget> UVirtualJoystickArea::RebuildWidget()
 {
     MyVirtualJoystickArea = SNew(SVirtualJoystickArea);
+
+    if (!IsDesignTime())
+    {
+        InteractionColor = FLinearColor(1, 1, 1, 0.f);
+    }
 
     return MyVirtualJoystickArea.ToSharedRef();
 }
